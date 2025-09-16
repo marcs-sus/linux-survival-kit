@@ -4,7 +4,7 @@ A **Firewall** is a network security system, either software or hardware, that m
 
 Some operating system installations include a pre-configured firewall, but many lightweight or minimal Linux distributions do not. For these systems, setting up a firewall is essential for security.
 
-A popular and user-friendly firewall software is `ufw`, which stands for *Uncomplicated Firewall*. It simplifies the process of configuring firewall rules, providing an intuitive yet effective way to secure your system.
+A popular and user-friendly firewall software is `ufw`, which stands for _Uncomplicated Firewall_. It simplifies the process of configuring firewall rules, providing an intuitive yet effective way to secure your system.
 
 ### Installation
 
