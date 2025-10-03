@@ -5,6 +5,12 @@
 
 set -e
 
+# Relaunch as root if not already
+if [[ $EUID -ne 0 ]]; then
+    echo -e "\033[1;33mNot running as root, re-executing with sudo...\033[0m"
+    exec sudo "$0" "$@"
+fi
+
 # Check if any apt frontend is installed
 APT_CMD=""
 
@@ -22,16 +28,16 @@ fi
 # Update system packages with apt or its frontend
 update_apt() {
 	echo -e "\033[1;32mUpdating system packages with $APT_CMD...\033[0m"
-	sudo $APT_CMD update
-	sudo $APT_CMD upgrade -y
-	sudo $APT_CMD autoremove -y
+	$APT_CMD update
+	$APT_CMD upgrade -y
+	$APT_CMD autoremove -y
 }
 
 # Update Flatpak packages if Flatpak is installed
 update_flatpak() {
 	if which flatpak > /dev/null; then
 		echo -e "\033[1;32mUpdating Flatpak apps...\033[0m"	
-		sudo flatpak update -y
+		flatpak update -y
 	else
 		echo -e "\033[1;31mFlatpak not installed. Skipping Flatpak updates.\033[0m"
 	fi
@@ -41,7 +47,7 @@ update_flatpak() {
 update_snap() {
 	if which snap > /dev/null; then
 		echo -e "\033[1;32mUpdating Snap packages...\033[0m"
-		sudo snap refresh
+		snap refresh
 	else
 		echo -e "\033[1;31mSnap not installed. Skipping Snap updates.\033[0m"
 	fi
