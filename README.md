@@ -53,6 +53,7 @@ All scripts include error handling, colored output, and helpful feedback.
 | [fwupd-flow.sh](Firmware/fwupd-flow.sh)                      | Automates firmware update workflow: checks devices, refreshes metadata, and installs updates    | `sudo ./Firmware/fwupd-flow.sh`               |
 | [git-autosync.sh](Git/git-autosync.sh)                       | Syncs Git repositories (fetch, pull, push); supports recursive scanning                         | `./Git/git-autosync.sh [--recursive]`         |
 | [install-chrome.sh](Misc/install-chrome.sh)                  | Installs Google Chrome with proper repository setup and signing keys                            | `sudo ./Misc/install-chrome.sh`               |
+| [switch-audio.sh](Misc/switch-audio.sh)                      | Switches audio output between available PulseAudio/Pipewire-Pulse sinks                         | `./Misc/switch-audio.sh`                      |
 
 ## License
 
