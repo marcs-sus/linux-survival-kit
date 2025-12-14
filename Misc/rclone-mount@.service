@@ -1,0 +1,23 @@
+[Unit]
+Description=RClone mount for %i
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=%u
+ExecStart=/usr/bin/rclone mount %i: %h/mounts/%i \
+   --config %h/.config/rclone/rclone.conf \
+   --allow-other \
+   --vfs-cache-mode full \
+   --dir-cache-time 72h \
+   --poll-interval 30s \
+   --umask 002 \
+   --log-level INFO \
+   --log-file /var/log/rclone-%i.log
+ExecStop=/bin/fusermount -uz %h/mounts/%i
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
