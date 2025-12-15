@@ -48,24 +48,25 @@ Comprehensive guides covering setup and configuration:
 All scripts include error handling, colored output, and helpful feedback.
 They can be placed in `/usr/local/bin/` for system-wide execution or `~/.local/bin/` for user-specific execution. But most can be run from anywhere.
 
-| Script                                                       | Description                                                                                     | Usage                                         |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| [ufw-config.sh](Firewall/ufw-config.sh)                      | Installs and configures UFW with secure defaults, rate limiting for SSH, and opens common ports | `sudo ./Firewall/ufw-config.sh`               |
-| [debian-update-all.sh](Package-Manager/debian-update-all.sh) | Updates packages across APT, Flatpak, and Snap; supports APT frontends (Nala, Aptitude)         | `sudo ./Package-Manager/debian-update-all.sh` |
-| [arch-update-all.sh](Package-Manager/arch-update-all.sh)     | Updates packages across pacman, AUR (yay/paru), Flatpak, and Snap                               | `sudo ./Package-Manager/arch-update-all.sh`   |
-| [fwupd-flow.sh](Firmware/fwupd-flow.sh)                      | Automates firmware update workflow: checks devices, refreshes metadata, and installs updates    | `sudo ./Firmware/fwupd-flow.sh`               |
-| [git-autosync.sh](Git/git-autosync.sh)                       | Syncs Git repositories (fetch, pull, push); supports recursive scanning                         | `./Git/git-autosync.sh [--recursive]`         |
-| [install-chrome.sh](Misc/install-chrome.sh)                  | Installs Google Chrome with proper repository setup and signing keys                            | `sudo ./Misc/install-chrome.sh`               |
-| [switch-audio.sh](Misc/switch-audio.sh)                      | Switches audio output between available PulseAudio/Pipewire-Pulse sinks                         | `./Misc/switch-audio.sh`                      |
+| Script                                                       | Description                                                                                     | Usage                                                |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [ufw-config.sh](Firewall/ufw-config.sh)                      | Installs and configures UFW with secure defaults, rate limiting for SSH, and opens common ports | `sudo ./Firewall/ufw-config.sh`                      |
+| [debian-update-all.sh](Package-Manager/debian-update-all.sh) | Updates packages across APT, Flatpak, and Snap; supports APT frontends (Nala, Aptitude)         | `sudo ./Package-Manager/debian-update-all.sh`        |
+| [arch-update-all.sh](Package-Manager/arch-update-all.sh)     | Updates packages across pacman, AUR (yay/paru), Flatpak, and Snap                               | `sudo ./Package-Manager/arch-update-all.sh`          |
+| [fwupd-flow.sh](Firmware/fwupd-flow.sh)                      | Automates firmware update workflow: checks devices, refreshes metadata, and installs updates    | `sudo ./Firmware/fwupd-flow.sh`                      |
+| [git-autosync.sh](Scripts/Automation/git-autosync.sh)        | Syncs Git repositories (fetch, pull, push); supports recursive scanning                         | `./Scripts/Automation/git-autosync.sh [--recursive]` |
+| [auto-aliases.sh](Scripts/Automation/auto-aliases.sh)        | Automatically creates aliases and organizes them into ~/.<SHELL_NAME>\_aliases                  | `./Scripts/Automation/auto-aliases.sh`               |
+| [install-chrome.sh](Misc/install-chrome.sh)                  | Installs Google Chrome with proper repository setup and signing keys                            | `sudo ./Misc/install-chrome.sh`                      |
+| [switch-audio.sh](Scripts/System/switch-audio.sh)            | Switches audio output between available PulseAudio/Pipewire-Pulse sinks                         | `./Scripts/System/switch-audio.sh`                   |
 
 <h2 id="systemd-services">⚙️ Systemd Services</h2>
 
 Systemd unit files for automating system tasks.
 They can be placed in `/etc/systemd/system/`.
 
-| Unit                                                | Description                                             | Usage                                                            |
-| --------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
-| [rclone-mount@.service](Misc/rclone-mount@.service) | Mounts an RClone remote as a systemd service (template) | `sudo systemctl enable --now rclone-mount@<remote_name>.service` |
+| Unit                                                   | Description                                             | Usage                                                            |
+| ------------------------------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------- |
+| [rclone-mount@.service](Systemd/rclone-mount@.service) | Mounts an RClone remote as a systemd service (template) | `sudo systemctl enable --now rclone-mount@<remote_name>.service` |
 
 <h2 id="license">License</h2>
 
