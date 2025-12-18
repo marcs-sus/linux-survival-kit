@@ -4,17 +4,16 @@
 # Automatically syncs all repositories in the current directory, with option to run recursively.
 
 # Check if git is installed
-if ! command -v git &> /dev/null; then
-	echo -e "\033[1;31git is not installed. Please install it first.\033[0m"
+if ! command -v git &>/dev/null; then
+    echo -e "\033[1;31git is not installed. Please install it first.\033[0m"
     echo -e "\033[1;31mYou can install it using: sudo apt install git\033[0m"
     exit 1
 fi
 
 # Function to sync a single repository
-sync_repo()
-{
+sync_repo() {
     repo=$1
-    
+
     # Check for possible errors in the repository path
     if [ -z "$repo" ]; then
         echo -e "\033[1;31mError: No repository path provided.\033[0m"
@@ -46,8 +45,7 @@ sync_repo()
 }
 
 # Function to sync all repositories in a directory
-sync_all_repos()
-{
+sync_all_repos() {
     for dir in */; do
         if [ -d "$dir/.git" ]; then
             sync_repo "$dir"
@@ -56,8 +54,7 @@ sync_all_repos()
 }
 
 # Function to sync all repositories in a directory recursively
-sync_all_repos_recursive()
-{
+sync_all_repos_recursive() {
     find . -type d -name ".git" | while read -r gitdir; do
         repo="$(dirname "$gitdir")"
         sync_repo "$repo"
@@ -65,8 +62,7 @@ sync_all_repos_recursive()
 }
 
 # Function to show usage
-help()
-{
+help() {
     echo "Usage: $0 [OPTION]"
     echo "Automatically sync all git repositories in the current directory."
     echo
@@ -76,8 +72,7 @@ help()
 }
 
 # Main function
-main()
-{
+main() {
     # No arguments: sync all repos in current directory
     if [ $# -eq 0 ]; then
         sync_all_repos
@@ -87,19 +82,19 @@ main()
     # Parse arguments
     while [ $# -gt 0 ]; do
         case "$1" in
-            -r|--recursive)
-                sync_all_repos_recursive
-                exit 0
-                ;;
-            -h|--help)
-                help
-                exit 0
-                ;;
-            *)
-                echo -e "\033[1;31mUnknown option: $1\033[0m"
-                help
-                exit 1
-                ;;
+        -r | --recursive)
+            sync_all_repos_recursive
+            exit 0
+            ;;
+        -h | --help)
+            help
+            exit 0
+            ;;
+        *)
+            echo -e "\033[1;31mUnknown option: $1\033[0m"
+            help
+            exit 1
+            ;;
         esac
     done
 }

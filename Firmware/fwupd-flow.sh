@@ -12,8 +12,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check if fwupd is installed
-if ! command -v fwupdmgr &> /dev/null; then
-	echo -e "\033[1;31fwupd is not installed. Please install it first.\033[0m"
+if ! command -v fwupdmgr &>/dev/null; then
+    echo -e "\033[1;31fwupd is not installed. Please install it first.\033[0m"
     echo -e "\033[1;31mYou can install it using: sudo apt install fwupd\033[0m"
     exit 1
 fi

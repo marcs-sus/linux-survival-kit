@@ -18,7 +18,7 @@ for i in "${!sinks[@]}"; do
 done
 
 # Compute the next sink index (loop back if at end)
-next_index=$(( (current_index + 1) % ${#sinks[@]} ))
+next_index=$(((current_index + 1) % ${#sinks[@]}))
 next_sink="${sinks[$next_index]}"
 
 # Set the new default sink

@@ -41,7 +41,7 @@ update_apt() {
 # Update Flatpak packages if installed
 update_flatpak() {
     if command -v flatpak >/dev/null 2>&1; then
-    	echo -e "${GREEN}Updating Flatpak apps...${RESET}"
+        echo -e "${GREEN}Updating Flatpak apps...${RESET}"
         flatpak update -y
     else
         echo -e "${YELLOW}Flatpak not installed, skipping.${RESET}"

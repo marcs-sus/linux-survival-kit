@@ -22,11 +22,11 @@ detect_shell() {
     local shell_name
     shell_name=$(basename "$SHELL")
     case "$shell_name" in
-        bash|zsh|ksh|ash|dash)
-            echo "$shell_name"
-            ;;
-        *)
-            echo "bash" 
+    bash | zsh | ksh | ash | dash)
+        echo "$shell_name"
+        ;;
+    *)
+        echo "bash"
         ;;
     esac
 }
@@ -40,7 +40,8 @@ ALIAS_NAME=$1
 ALIAS_COMMAND=$2
 
 # Snippet to be added to the RC file
-FILE_SOURCE_SNIPPET=$(cat << 'EOF'
+FILE_SOURCE_SNIPPET=$(
+    cat <<'EOF'
 # Snippet automatically added by auto-aliases.sh
 # Source ~/.SHELL_NAME_aliases if it exists
 if [ -f ~/.SHELL_NAME_aliases ]; then
@@ -51,7 +52,8 @@ EOF
 FILE_SOURCE_SNIPPET=${FILE_SOURCE_SNIPPET//SHELL_NAME/$SHELL_NAME}
 
 # Base content for the alias file
-BASE_ALIAS_FILE=$(cat << 'EOF'
+BASE_ALIAS_FILE=$(
+    cat <<'EOF'
 # This file contains user-defined SHELL_NAME aliases.
 # It is automatically sourced by ~/.SHELL_NAMErc.
 EOF
@@ -66,12 +68,12 @@ fi
 
 # Initialize ~/.<SHELL_NAME>_aliases with base content if empty
 if [ ! -s "$ALIAS_FILE" ]; then
-    echo -e "$BASE_ALIAS_FILE\n" >> "$ALIAS_FILE"
+    echo -e "$BASE_ALIAS_FILE\n" >>"$ALIAS_FILE"
 fi
 
 # Ensure ~/.<SHELL_NAME>rc sources ~/.<SHELL_NAME>_aliases if not already present
 if ! grep -q "\.${SHELL_NAME}_aliases" "$RC_FILE"; then
-    echo -e "\n$FILE_SOURCE_SNIPPET\n" >> "$RC_FILE"
+    echo -e "\n$FILE_SOURCE_SNIPPET\n" >>"$RC_FILE"
     echo -e "\033[1;32mUpdated $RC_FILE to source $ALIAS_FILE.\033[0m"
 fi
 
@@ -83,7 +85,7 @@ if [ -z "$ALIAS_NAME" ] || [ -z "$ALIAS_COMMAND" ] || [[ "$ALIAS_NAME" == "--she
 fi
 
 # Add the new alias to ~/.<SHELL_NAME>_aliases
-echo "alias $ALIAS_NAME='$ALIAS_COMMAND'" >> "$ALIAS_FILE"
+echo "alias $ALIAS_NAME='$ALIAS_COMMAND'" >>"$ALIAS_FILE"
 
 # Display success message
 echo -e "\033[1;32mAlias '$ALIAS_NAME' for command '$ALIAS_COMMAND' added to $ALIAS_FILE.\033[0m"

@@ -4,8 +4,8 @@
 # Set default policies and allow essential services
 
 # Check if ufw is installed
-if ! command -v ufw &> /dev/null; then
-	echo -e "\033[1;31mufw is not installed. Installing it now...\033[0m"
+if ! command -v ufw &>/dev/null; then
+    echo -e "\033[1;31mufw is not installed. Installing it now...\033[0m"
 
     sudo apt update
     sudo apt install ufw
@@ -13,7 +13,7 @@ else
     echo -e "\033[1;32mufw is already installed. Attempting to update it now...\033[0m"
 
     sudo apt update
-    sudo apt upgrade ufw -y 
+    sudo apt upgrade ufw -y
 fi
 
 # Set default policies
