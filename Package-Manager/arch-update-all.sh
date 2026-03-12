@@ -15,8 +15,6 @@ RESET="\033[0m"
 update_pacman() {
     echo -e "${GREEN}Updating system packages with pacman...${RESET}"
     sudo pacman -Syu --noconfirm
-    echo -e "${GREEN}Removing unneeded dependencies...${RESET}"
-    sudo pacman -Rns $(pacman -Qtdq) --noconfirm 2>/dev/null || echo -e "${YELLOW}No unneeded packages to remove.${RESET}"
 }
 
 # Detect and update AUR packages with the AUR helper
@@ -34,23 +32,32 @@ update_aur() {
     $AUR_HELPER -Syu --noconfirm
 }
 
+# Remove orphaned packages with pacman
+remove_orphans() {
+    echo -e "${GREEN}Removing orphaned packages...${RESET}"
+    sudo pacman -Rns $(pacman -Qtdq) --noconfirm 2>/dev/null || echo -e "${YELLOW}No orphaned packages to remove.${RESET}"
+}
+
 # Update Flatpak packages if installed
 update_flatpak() {
     if command -v flatpak >/dev/null 2>&1; then
         echo -e "${GREEN}Updating Flatpak apps...${RESET}"
-        flatpak update -y
+        flatpak --user update -y
+        sudo flatpak --system update -y
+        flatpak --user uninstall --unused -y
+        sudo flatpak --system uninstall --unused -y
     else
         echo -e "${YELLOW}Flatpak not installed, skipping.${RESET}"
     fi
 }
 
-# Update Snap packages if Snap is installed
-update_snap() {
-    if command -v snap >/dev/null 2>&1; then
-        echo -e "${GREEN}Updating Snap packages...${RESET}"
-        sudo snap refresh
+# Update Npm global packages if Npm is installed
+update_npm() {
+    if command -v npm >/dev/null 2>&1; then
+        echo -e "${GREEN}Updating global npm packages...${RESET}"
+        npm update -g
     else
-        echo -e "${YELLOW}Snap not installed, skipping.${RESET}"
+        echo -e "${YELLOW}npm not installed, skipping.${RESET}"
     fi
 }
 
@@ -58,6 +65,7 @@ update_snap() {
 echo -e "${YELLOW}Starting full system update...${RESET}"
 update_pacman && echo
 update_aur && echo
+remove_orphans && echo
 update_flatpak && echo
-update_snap && echo
+update_npm && echo
 echo -e "${GREEN}✅ All updates completed successfully!${RESET}"
