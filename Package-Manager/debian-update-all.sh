@@ -11,12 +11,6 @@ YELLOW="\033[1;33m"
 RED="\033[1;31m"
 RESET="\033[0m"
 
-# Relaunch as root if not already
-if [[ $EUID -ne 0 ]]; then
-    echo -e "${YELLOW}Not running as root, re-executing with sudo...${RESET}"
-    exec sudo "$0" "$@"
-fi
-
 # Detect available apt frontend
 APT_CMD=""
 if command -v nala >/dev/null 2>&1; then
@@ -33,28 +27,19 @@ fi
 # Update system packages with apt or its frontend
 update_apt() {
     echo -e "${GREEN}Updating system packages with ${APT_CMD}...${RESET}"
-    $APT_CMD update
-    $APT_CMD upgrade -y
-    $APT_CMD autoremove -y
+    sudo $APT_CMD update && sudo $APT_CMD upgrade -y && sudo $APT_CMD autoremove -y
 }
 
 # Update Flatpak packages if installed
 update_flatpak() {
     if command -v flatpak >/dev/null 2>&1; then
         echo -e "${GREEN}Updating Flatpak apps...${RESET}"
-        flatpak update -y
+        flatpak --user update -y
+        sudo flatpak --system update -y
+        flatpak --user uninstall --unused
+        sudo flatpak --system uninstall --unused
     else
         echo -e "${YELLOW}Flatpak not installed, skipping.${RESET}"
-    fi
-}
-
-# Update Snap packages if Snap is installed
-update_snap() {
-    if command -v snap >/dev/null 2>&1; then
-        echo -e "${GREEN}Updating Snap packages...${RESET}"
-        snap refresh
-    else
-        echo -e "${YELLOW}Snap not installed, skipping.${RESET}"
     fi
 }
 
@@ -62,5 +47,4 @@ update_snap() {
 echo -e "${YELLOW}Starting full system update...${RESET}"
 update_apt && echo
 update_flatpak && echo
-update_snap && echo
 echo -e "${GREEN}✅ All updates completed successfully!${RESET}"
